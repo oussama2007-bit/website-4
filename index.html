@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Interface</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: "Courier New", monospace;
+            font-size: 18px;
+            margin: 0;
+            padding: 0;
+        }
+        /* Login Page Style */
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .input-box {
+            width: 300px;
+            height: 40px;
+            margin: 10px 0;
+            background-color: black;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            font-size: 18px;
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #ff6347;
+        }
+        #status {
+            color: #ff6347;
+            margin-top: 20px;
+        }
+        /* Hacker Terminal Style */
+        #terminal {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            height: 100vh;
+            overflow-y: auto;
+            display: none; /* Initially hidden */
+        }
+        .command {
+            color: #ff6347;
+        }
+        .output {
+            color: #00FF00;
+        }
+        .emoji {
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Page -->
+<div class="container" id="login-container">
+    <h1>Hacking Interface</h1>
+    <input class="input-box" type="text" id="username" placeholder="Username" />
+    <input class="input-box" type="password" id="password" placeholder="Password" />
+    <button onclick="startHacking()">Login</button>
+    <p id="status"></p>
+</div>
+
+<!-- Hacker Terminal -->
+<div id="terminal">
+    <div id="terminal-output"></div>
+</div>
+
+<script>
+    // Login and Terminal Simulation
+
+    const loginContainer = document.getElementById('login-container');
+    const terminal = document.getElementById('terminal');
+    const terminalOutput = document.getElementById('terminal-output');
+    const status = document.getElementById('status');
+
+    // Commands to simulate in the hacker terminal
+    const commands = [
+        "Initializing system...",
+        "Scanning network for devices...",
+        "Bypassing firewall...",
+        "Accessing Facebook...",
+        "Decrypting password hashes...",
+        "Access Granted! Logging in...",
+        "Welcome, User.",
+        "Fetching Instagram data...",
+        "Error: Unauthorized access attempt detected.",
+        "System shutting down...",
+        "Goodbye."
+    ];
+
+    // Function to simulate typing text (used for terminal effect)
+    function typeText(text, element, callback) {
+        let index = 0;
+        let typingInterval = setInterval(() => {
+            element.innerHTML += text[index++];
+            if (index === text.length) {
+                clearInterval(typingInterval);
+                if (callback) callback();
+            }
+        }, 100);
+    }
+
+    // Function to run the commands in the terminal
+    function runCommand() {
+        const commandDiv = document.createElement('div');
+        commandDiv.classList.add('command');
+        terminalOutput.appendChild(commandDiv);
+
+        typeText('> ' + commands[0], commandDiv, () => {
+            setTimeout(() => {
+                const outputDiv = document.createElement('div');
+                outputDiv.classList.add('output');
+                terminalOutput.appendChild(outputDiv);
+                typeText(commands[1], outputDiv, () => {
+                    commands.push(commands.shift()); // Move the first command to the end of the list
+                    runCommand(); // Run the next command
+                });
+            }, 1000);
+        });
+    }
+
+    // Login function to check username and password
+    function startHacking() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        status.innerHTML = "Attempting to login...";
+        setTimeout(() => {
+            if (username === "admin" && password === "password123") {
+                status.innerHTML = "Access Granted! Redirecting to terminal...";
+                setTimeout(() => {
+                    // Hide login and show terminal
+                    loginContainer.style.display = 'none';
+                    terminal.style.display = 'block';
+                    runCommand(); // Start terminal simulation
+                }, 1000); // Wait 1 second before transitioning
+            } else {
+                status.innerHTML = "Login Failed. Attempting to hack password...";
+                setTimeout(() => {
+                    status.innerHTML = "Password cracked! Welcome!";
+                    setTimeout(() => {
+                        // Hide login and show terminal
+                        loginContainer.style.display = 'none';
+                        terminal.style.display = 'block';
+                        runCommand(); // Start terminal simulation
+                    }, 1000); // Transition after cracking password
+                }, 2000); // Simulate cracking delay
+            }
+        }, 1000); // Simulate login attempt delay
+    }
+</script>
+
+</body>
+</html>
