@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hacking Interface</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: "Courier New", monospace;
+            font-size: 20px;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .input-box {
+            width: 300px;
+            height: 40px;
+            margin: 10px 0;
+            background-color: black;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            font-size: 18px;
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #ff6347;
+        }
+        #status {
+            color: #ff6347;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hacking Interface</h1>
+    <input class="input-box" type="text" id="username" placeholder="Username" />
+    <input class="input-box" type="password" id="password" placeholder="Password" />
+    <button onclick="startHacking()">Login</button>
+    <p id="status"></p>
+</div>
+
+<script>
+    function startHacking() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const status = document.getElementById('status');
+
+        status.innerHTML = "Attempting to login...";
+        setTimeout(() => {
+            if (username === "admin" && password === "password123") {
+                status.innerHTML = "Access Granted! Redirecting to terminal...";
+                // Redirect to hacker terminal after successful login
+                setTimeout(() => {
+                    window.location.href = "hacker-terminal.html";
+                }, 1000); // Wait 1 second before redirecting
+            } else {
+                status.innerHTML = "Login Failed. Attempting to hack password...";
+                setTimeout(() => {
+                    status.innerHTML = "Password cracked! Welcome!";
+                    setTimeout(() => {
+                        window.location.href = "hacker-terminal.html";
+                    }, 1000); // Redirect after cracking password
+                }, 2000);
+            }
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
